@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/v1/gamesession")
-public abstract class GameSessionController {
+public  class GameSessionController {
 
     @Autowired
     private GameSessionService gameSessionService;
@@ -35,19 +35,20 @@ public abstract class GameSessionController {
     }
 
     @GetMapping("/getReflexSessions")
-    public ResponseEntity<List<GameSession>> getReflexSessions() {
-        List<GameSession> sessions = gameSessionService.getReflexSessions();
+    public ResponseEntity<List<GameSessionDTO>> getReflexSessions() {
+        List<GameSessionDTO> sessions = gameSessionService.getReflexSessions();
         return ResponseEntity.ok(sessions);
     }
 
-    public ResponseEntity<List<GameSession>> getMemorySessions() {
-        List<GameSession> sessions = gameSessionService.getMemorySessions();
+    @GetMapping("/getMemorySessions")
+    public ResponseEntity<List<GameSessionDTO>> getMemorySessions() {
+        List<GameSessionDTO> sessions = gameSessionService.getMemorySessions();
         return ResponseEntity.ok(sessions);
     }
 
     @GetMapping("/getLearningSessions")
-    public ResponseEntity<List<GameSession>> getLearningSessions() {
-        List<GameSession> sessions = gameSessionService.getLearningSessions();
+    public ResponseEntity<List<GameSessionDTO>> getLearningSessions() {
+        List<GameSessionDTO> sessions = gameSessionService.getLearningSessions();
         return ResponseEntity.ok(sessions);
     }
 }

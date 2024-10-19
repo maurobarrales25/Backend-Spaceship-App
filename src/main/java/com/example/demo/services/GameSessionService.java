@@ -37,4 +37,26 @@ public  class GameSessionService {
     public void deleteGameSessionById(int id) {
         gameSessionRepository.deleteById(id);
     }
+
+    public List<GameSessionDTO> getReflexSessions() {
+        List<GameSession> reflexSessions = gameSessionRepository.findReflexSessions();
+        return reflexSessions.stream()
+                .map(gameSessionMapper::gameSessionToGameSessionDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<GameSessionDTO> getMemorySessions() {
+        List<GameSession> memorySessions = gameSessionRepository.findMemorySessions();
+        return memorySessions.stream()
+                .map(gameSessionMapper::gameSessionToGameSessionDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<GameSessionDTO> getLearningSessions() {
+        List<GameSession> learningSessions = gameSessionRepository.findLearningSessions();
+        return learningSessions.stream()
+                .map(gameSessionMapper::gameSessionToGameSessionDto)
+                .collect(Collectors.toList());
+    }
+
 }
