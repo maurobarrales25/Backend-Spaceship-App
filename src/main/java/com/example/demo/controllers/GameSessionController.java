@@ -10,16 +10,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/v1/gamesession")
+@RequestMapping(path = "/api/v1/gameSession")
 public  class GameSessionController {
 
     @Autowired
     private GameSessionService gameSessionService;
 
     @GetMapping("/getAllGameSessions")
-    public ResponseEntity<List<GameSessionDTO>> getGameSession() {
+    public ResponseEntity<List<GameSessionDTO>> getAllGameSession() {
         List<GameSessionDTO> gameSessions = gameSessionService.getAllGameSessions();
         return ResponseEntity.ok(gameSessions);
+    }
+
+    @GetMapping("/getGameSessionById/{id}")
+    public ResponseEntity<GameSessionDTO> getGameSessionById(@PathVariable("id") int id) {
+        GameSessionDTO session = gameSessionService.getGameSessionById(id);
+        return ResponseEntity.ok(session);
+    }
+
+    @GetMapping("/getGameSessionsByUserId/{userId}")
+    public ResponseEntity<List<GameSessionDTO>> getGameSessionsByUserId(@PathVariable("userId") int userId) {
+        List<GameSessionDTO> sessions = gameSessionService.getGameSessionsByUserId(userId);
+        return ResponseEntity.ok(sessions);
     }
 
     @PostMapping("/createGameSession")
@@ -49,6 +61,24 @@ public  class GameSessionController {
     @GetMapping("/getLearningSessions")
     public ResponseEntity<List<GameSessionDTO>> getLearningSessions() {
         List<GameSessionDTO> sessions = gameSessionService.getLearningSessions();
+        return ResponseEntity.ok(sessions);
+    }
+
+    @GetMapping("/getMemorySessionsByUserId/{userId}")
+    public ResponseEntity<List<GameSessionDTO>> getMemorySessionsByUserId(@PathVariable("userId") int userId) {
+        List<GameSessionDTO> sessions = gameSessionService.getMemorySessionsByUserId(userId);
+        return ResponseEntity.ok(sessions);
+    }
+
+    @GetMapping("/getLearningSessionsByUserId/{userId}")
+    public ResponseEntity<List<GameSessionDTO>> getLearningSessionsByUserId(@PathVariable("userId") int userId) {
+        List<GameSessionDTO> sessions = gameSessionService.getLearningSessionsByUserId(userId);
+        return ResponseEntity.ok(sessions);
+    }
+
+    @GetMapping("/getReflexSessionsByUserId/{userId}")
+    public ResponseEntity<List<GameSessionDTO>> getReflexSessionsByUserId(@PathVariable("userId") int userId) {
+        List<GameSessionDTO> sessions = gameSessionService.getReflexSessionsByUserId(userId);
         return ResponseEntity.ok(sessions);
     }
 }

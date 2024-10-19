@@ -23,6 +23,11 @@ public  class GameSessionService {
         return gameSessionMapper.idToGameSessionDto(gameSession);
     }
 
+    public List<GameSessionDTO> getGameSessionsByUserId(int userId) {
+        List<GameSession> gameSessions = gameSessionRepository.findByUserId(userId);
+        return gameSessions.stream().map(gameSessionMapper::gameSessionToGameSessionDto).collect(Collectors.toList());
+    }
+
     public List<GameSessionDTO> getAllGameSessions() {
         List<GameSession> gameSessions = gameSessionRepository.findAll();
         return gameSessions.stream().map(gameSessionMapper::gameSessionToGameSessionDto).collect(Collectors.toList());
@@ -40,23 +45,33 @@ public  class GameSessionService {
 
     public List<GameSessionDTO> getReflexSessions() {
         List<GameSession> reflexSessions = gameSessionRepository.findReflexSessions();
-        return reflexSessions.stream()
-                .map(gameSessionMapper::gameSessionToGameSessionDto)
-                .collect(Collectors.toList());
+        return reflexSessions.stream().map(gameSessionMapper::gameSessionToGameSessionDto).collect(Collectors.toList());
     }
 
     public List<GameSessionDTO> getMemorySessions() {
         List<GameSession> memorySessions = gameSessionRepository.findMemorySessions();
-        return memorySessions.stream()
-                .map(gameSessionMapper::gameSessionToGameSessionDto)
-                .collect(Collectors.toList());
+        return memorySessions.stream().map(gameSessionMapper::gameSessionToGameSessionDto).collect(Collectors.toList());
     }
 
     public List<GameSessionDTO> getLearningSessions() {
         List<GameSession> learningSessions = gameSessionRepository.findLearningSessions();
-        return learningSessions.stream()
-                .map(gameSessionMapper::gameSessionToGameSessionDto)
-                .collect(Collectors.toList());
+        return learningSessions.stream().map(gameSessionMapper::gameSessionToGameSessionDto).collect(Collectors.toList());
+    }
+
+
+    public List<GameSessionDTO> getMemorySessionsByUserId(int userId) {
+        List<GameSession> memorySessions = gameSessionRepository.findMemorySessionsByUserId(userId);
+        return memorySessions.stream().map(gameSessionMapper::gameSessionToGameSessionDto).collect(Collectors.toList());
+    }
+
+    public List<GameSessionDTO> getLearningSessionsByUserId(int userId) {
+        List<GameSession> learningSessions = gameSessionRepository.findLearningSessionsByUserId(userId);
+        return learningSessions.stream().map(gameSessionMapper::gameSessionToGameSessionDto).collect(Collectors.toList());
+    }
+
+    public List<GameSessionDTO> getReflexSessionsByUserId(int userId) {
+        List<GameSession> reflexSessions = gameSessionRepository.findReflexSessionsByUserId(userId);
+        return reflexSessions.stream().map(gameSessionMapper::gameSessionToGameSessionDto).collect(Collectors.toList());
     }
 
 }

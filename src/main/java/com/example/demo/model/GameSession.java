@@ -19,7 +19,7 @@ public class GameSession {
     @Column
     private int score;
 
-    @Column(name="session_Date", columnDefinition = "TIMESTAMP DEFUALT CURRENT_TIMESTAMP")
+    @Column(name="session_Date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime sessionDate;
 
     @OneToOne
@@ -30,6 +30,9 @@ public class GameSession {
 
     @OneToOne
     private LearningSessionData learningSessionData;
+
+    @OneToOne
+    private MusicalSessionData  musicalSessionData;
 
     public GameSession(LocalDateTime sessionDate, int score, User user, int id) {
         this.sessionDate = sessionDate;
@@ -96,5 +99,13 @@ public class GameSession {
 
     public void setLearningSessionData(LearningSessionData learningSessionData) {
         this.learningSessionData = learningSessionData;
+    }
+
+    public MusicalSessionData getMusicalSessionData() {
+        return musicalSessionData;
+    }
+
+    public void setMusicalSessionData(MusicalSessionData musicalSessionData) {
+        this.musicalSessionData = musicalSessionData;
     }
 }

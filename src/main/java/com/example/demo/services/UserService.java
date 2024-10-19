@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,7 +22,7 @@ public class UserService {
     private UserMapper userMapper = UserMapper.INSTANCE;
 
     public UserDTO getUserById(int id) {
-        User user = userRepository.findById(id).orElseThrow(()->new RuntimeException("Usuario no encontrado"));
+        User user = userRepository.findById(id).orElseThrow(()->new RuntimeException("User not found"));
         return userMapper.usernameToUserDto(user);
     }
 
@@ -33,23 +34,10 @@ public class UserService {
 
     public List<UserDTO> getUsers() {
         List<User> users = userRepository.findAll();
-        return users.stream().map(userMapper::userToUserDto).collect(Collectors.toList());
-       // return userRepository.findAll();
-//        List<User> list1 = List.of(
-//                new User(
-//                        1,
-//                        "Mark Watson",
-//                        "MWatson",
-//                        "markwatson@example.com",
-//                        passwordEncoder.encode("password123")
-//                )
-//        );
-//        List<UserDTO> list2 = new ArrayList<UserDTO>();
-
-//        return list2;
-
-
-
+        if (users.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return users.stream().map(userMapper::userToUserDto).toList();
     }
 
     public UserDTO createUser(UserDTO userDTO) {
