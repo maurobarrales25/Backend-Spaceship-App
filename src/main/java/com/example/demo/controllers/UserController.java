@@ -21,19 +21,19 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping("/getAllUsers")
     public ResponseEntity<List<UserDTO>> getUsers() {
         List<UserDTO> users = userService.getUsers();
         return ResponseEntity.ok(users);
     }
 
-    @PostMapping
+    @PostMapping("/createUser")
     public ResponseEntity<UserDTO> createUser(@RequestBody User user) {
         UserDTO createdUser = userService.createUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping("deleteUser/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") Integer userId) {
         userService.deleteUser(userId);
         return ResponseEntity.noContent().build();

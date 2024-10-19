@@ -7,7 +7,7 @@ import com.example.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -15,16 +15,17 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
 
+    @Autowired
+    private UserRepository userRepository;
 
-    private final UserRepository userRepository;
-    private final UserMapper userMapper = UserMapper.INSTANCE;
+    private UserMapper userMapper = UserMapper.INSTANCE;
 
     public UserDTO getUserById(int id) {
         User user = userRepository.findById(id).orElseThrow(()->new RuntimeException("Usuario no encontrado"));
         return userMapper.usernameToUserDto(user);
     }
 
-    @Autowired
+
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -51,13 +52,16 @@ public class UserService {
 
     }
 
-    public UserDTO createUser(User user) {
+    public UserDTO createUser(UserDTO userDTO) {
+
+        User user = userMapper.userDtoToUser(userDTO);
+
         Optional<User> userUsername = userRepository.findUserByUsername(user.getUsername());
         if (userUsername.isPresent()) {
-            throw new IllegalStateException("Ese username ya se existe.");
+            throw new IllegalStateException("That username is not available.");
         }
-        User savedUser = userRepository.save(user); // Guarda el usuario en la base de datos
-        return userMapper.userToUserDto(savedUser); // Mapea y devuelve el UserDTO
+        User savedUser = userRepository.save(user);
+        return userMapper.userToUserDto(savedUser);
     }
 
     public boolean checkPassword(User user, String rawPassword) {
@@ -67,7 +71,7 @@ public class UserService {
     public void deleteUser(Integer userId){
         boolean exists = userRepository.existsById(userId);
         if (!exists){
-            throw new IllegalStateException("User with id "+ userId + "doesnt exist");
+            throw new IllegalStateException("User with id "+ userId + "doesn't exist");
         }
         userRepository.deleteById(userId);
     }
