@@ -21,4 +21,7 @@ public interface ReflexSessionDataRepository extends JpaRepository<ReflexSession
 
     @Query("SELECT MAX(r.score) FROM ReflexSessionData r WHERE r.user.id = ?1")
     Integer findBestScoreByUserId(int userId);
+
+    @Query("SELECT MAX(r.score), r.user.username " + "FROM ReflexSessionData r " + "JOIN r.user u " + "GROUP BY r.user.username")
+    List<Object[]> getReflexMaxScoresWithUsernames();
 }

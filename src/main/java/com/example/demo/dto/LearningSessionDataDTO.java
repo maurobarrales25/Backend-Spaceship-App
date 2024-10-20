@@ -2,7 +2,7 @@ package com.example.demo.dto;
 
 import java.time.LocalDateTime;
 
-public class SessionDataDTO {
+public class LearningSessionDataDTO {
 
     private int id;
     private int score;

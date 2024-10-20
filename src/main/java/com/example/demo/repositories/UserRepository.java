@@ -13,7 +13,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("SELECT u From User u WHERE u.username = ?1")
     Optional<User> findUserByUsername(String username);
 
-    Optional<User> findByUsername(String username); // sirve igual
+    Optional<User> findByUsername(String username);
 
 }
 

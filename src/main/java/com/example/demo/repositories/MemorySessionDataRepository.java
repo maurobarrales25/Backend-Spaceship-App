@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface MemorySessionDataRepository extends JpaRepository<MemorySessionData, Integer> {
 
+    List<MemorySessionData> findByUserId(int userId);
+
     @Query("SELECT md FROM MemorySessionData  md WHERE md.user.id = ?1")
     List<MemorySessionData> findMemorySessionDataByUserId(int userId);
 

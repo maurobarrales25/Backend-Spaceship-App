@@ -1,12 +1,14 @@
 package com.example.demo.services;
 
 
+import com.example.demo.dto.MaxScoreDTO;
 import com.example.demo.dto.ReflexSessionDataDTO;
 import com.example.demo.mappers.ReflexSessionDataMapper;
 import com.example.demo.model.ReflexSessionData;
 import com.example.demo.repositories.ReflexSessionDataRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -57,6 +59,18 @@ public class ReflexSessionDataService {
 
     public Integer getBestScoreByUserId(int userId) {
         return reflexSessionDataRepository.findBestScoreByUserId(userId);
+    }
+
+    public List<MaxScoreDTO> getReflexMaxScoresWithUsernames() {
+        List<Object[]> resultsFromRepository = reflexSessionDataRepository.getReflexMaxScoresWithUsernames();
+        List<MaxScoreDTO> maxScores = new ArrayList<>();
+
+        for (Object[] object : resultsFromRepository) {
+            int maxScore = (int) object[0];
+            String username = (String) object[1];
+            maxScores.add(new MaxScoreDTO(maxScore, username));
+        }
+        return maxScores;
     }
 
 }

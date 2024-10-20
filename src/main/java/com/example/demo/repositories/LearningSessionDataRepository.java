@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface LearningSessionDataRepository extends JpaRepository<LearningSessionData, Integer> {
 
+    List<LearningSessionData> findByUserId(int userId);
+
     @Query("SELECT ld FROM LearningSessionData ld WHERE ld.user.id = ?1")
     List<LearningSessionData> findLearningSessionDataByUserId(int userId);
 

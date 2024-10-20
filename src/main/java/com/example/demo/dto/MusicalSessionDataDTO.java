@@ -1,24 +1,12 @@
-package com.example.demo.model;
+package com.example.demo.dto;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+public class MusicalSessionDataDTO {
 
-@MappedSuperclass
-public abstract class SessionData {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @Column(nullable = false)
     private int score;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    @Column(name = "session_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private int userId;
     private LocalDateTime sessionDate;
 
     public int getId() {
@@ -37,12 +25,12 @@ public abstract class SessionData {
         this.score = score;
     }
 
-    public User getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public LocalDateTime getSessionDate() {
@@ -55,11 +43,12 @@ public abstract class SessionData {
 
     @Override
     public String toString() {
-        return "SessionData{" +
+        return "SessionDataDTO{" +
                 "id=" + id +
                 ", score=" + score +
-                ", user=" + user +
+                ", userId=" + userId +
                 ", sessionDate=" + sessionDate +
                 '}';
     }
 }
+

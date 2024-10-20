@@ -1,7 +1,6 @@
 package com.example.demo.repositories;
 
-
-import com.example.demo.dto.MaxScoreDTO;
+import com.example.demo.model.MemorySessionData;
 import com.example.demo.model.MusicalSessionData;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface MusicalSessionDataRepository extends JpaRepository<MusicalSessionData, Integer> {
+
+    List<MusicalSessionData> findByUserId(int userId);
 
     @Query("SELECT musd FROM MusicalSessionData musd WHERE musd.user.id = ?1")
     List<MusicalSessionData> findMusicalSessionDataByUserId(int userId);

@@ -1,8 +1,8 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dto.MaxScoreDTO;
 import com.example.demo.dto.ReflexSessionDataDTO;
 import com.example.demo.services.ReflexSessionDataService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +13,11 @@ import java.util.List;
 @RequestMapping("/api/v1/reflexSessionData")
 public class ReflexSessionDataController {
 
-    @Autowired
-    private ReflexSessionDataService reflexSessionDataService;
+    private final ReflexSessionDataService reflexSessionDataService;
+
+    public ReflexSessionDataController(ReflexSessionDataService reflexSessionDataService) {
+        this.reflexSessionDataService = reflexSessionDataService;
+    }
 
     @GetMapping("/getAll")
     public ResponseEntity<List<ReflexSessionDataDTO>> getAllReflexSessionData() {
@@ -65,7 +68,11 @@ public class ReflexSessionDataController {
         return ResponseEntity.ok(bestScore);
     }
 
-
+    @GetMapping("/reflex-max-scores-username")
+    public ResponseEntity<List<MaxScoreDTO>> getReflexMaxScoresWithUsernames() {
+        List<MaxScoreDTO> maxScores = reflexSessionDataService.getReflexMaxScoresWithUsernames();
+        return ResponseEntity.ok(maxScores);
+    }
 
 
 }
