@@ -1,8 +1,8 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dto.MaxScoreDTO;
 import com.example.demo.dto.SessionDataDTO;
 import com.example.demo.services.SessionDataService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +13,11 @@ import java.util.List;
 @RequestMapping(path = "api/v1/sessionData")
 public class SessionDataController {
 
-    @Autowired
-    private SessionDataService sessionDataService;
+    private final SessionDataService sessionDataService;
+
+    public SessionDataController(SessionDataService sessionDataService) {
+        this.sessionDataService = sessionDataService;
+    }
 
     @GetMapping("/getAllSessionData")
     public ResponseEntity<List<SessionDataDTO>> getAllSessionData(){
@@ -64,9 +67,21 @@ public class SessionDataController {
         return ResponseEntity.ok(sessions);
     }
 
+    @GetMapping("/learning-max-scores")
+    public ResponseEntity<List<MaxScoreDTO>> getLearningMaxScoresWithUsernames() {
+        List<MaxScoreDTO> maxScores = sessionDataService.getLearningMaxScoresWithUsernames();
+        return ResponseEntity.ok(maxScores);
+    }
 
+    @GetMapping("/memory-max-scores")
+    public ResponseEntity<List<MaxScoreDTO>> getMemoryMaxScoresWithUsernames() {
+        List<MaxScoreDTO> maxScores = sessionDataService.getMemoryMaxScoresWithUsernames();
+        return ResponseEntity.ok(maxScores);
+    }
 
-
-
-
+    @GetMapping("/musical-max-scores")
+    public ResponseEntity<List<MaxScoreDTO>> getMusicalMaxScoresWithUsernames() {
+        List<MaxScoreDTO> maxScores = sessionDataService.getMusicalMaxScoresWithUsernames();
+        return ResponseEntity.ok(maxScores);
+    }
 }

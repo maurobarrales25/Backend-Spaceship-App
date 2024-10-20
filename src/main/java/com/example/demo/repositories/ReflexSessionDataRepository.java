@@ -12,4 +12,13 @@ public interface ReflexSessionDataRepository extends JpaRepository<ReflexSession
 
     @Query("SELECT r FROM ReflexSessionData  r WHERE r.user.id = ?1")
     List<ReflexSessionData> findReflexSessionsByUserId(int userId);
+
+    @Query("SELECT COUNT(r) FROM ReflexSessionData r WHERE r.user.id = ?1")
+    int countByUserId(int userId);
+
+    @Query("SELECT MAX(r.score) FROM ReflexSessionData r")
+    Integer findBestScore();
+
+    @Query("SELECT MAX(r.score) FROM ReflexSessionData r WHERE r.user.id = ?1")
+    Integer findBestScoreByUserId(int userId);
 }

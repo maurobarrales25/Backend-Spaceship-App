@@ -4,22 +4,21 @@ import com.example.demo.dto.UserDTO;
 import com.example.demo.mappers.UserMapper;
 import com.example.demo.model.User;
 import com.example.demo.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private static final UserMapper userMapper = UserMapper.INSTANCE;
 
-    private UserMapper userMapper = UserMapper.INSTANCE;
+
 
     public UserDTO getUserById(int id) {
         User user = userRepository.findById(id).orElseThrow(()->new RuntimeException("User not found"));
@@ -68,7 +67,5 @@ public class UserService {
         return userRepository.findUserByUsername(username);
     }
 
-
 }
 
-//De controller a service todo userDTO . De Service para abajo por user.

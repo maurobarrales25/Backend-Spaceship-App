@@ -5,19 +5,19 @@ import com.example.demo.dto.ReflexSessionDataDTO;
 import com.example.demo.mappers.ReflexSessionDataMapper;
 import com.example.demo.model.ReflexSessionData;
 import com.example.demo.repositories.ReflexSessionDataRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ReflexSessionDataService {
 
-    @Autowired
-    private ReflexSessionDataRepository reflexSessionDataRepository;
+    private final ReflexSessionDataRepository reflexSessionDataRepository;
+    private static final ReflexSessionDataMapper mapper = ReflexSessionDataMapper.INSTANCE;
 
-    private ReflexSessionDataMapper mapper = ReflexSessionDataMapper.INSTANCE;
+    public ReflexSessionDataService(ReflexSessionDataRepository reflexSessionDataRepository) {
+        this.reflexSessionDataRepository = reflexSessionDataRepository;
+    }
 
     public ReflexSessionDataDTO createReflexSessionData(ReflexSessionDataDTO dto) {
         ReflexSessionData sessionData = mapper.dtoToReflexSessionData(dto);
@@ -26,10 +26,7 @@ public class ReflexSessionDataService {
     }
 
     public List<ReflexSessionDataDTO> getAllReflexSessionData() {
-        return reflexSessionDataRepository.findAll()
-                .stream()
-                .map(mapper::reflexSessionDataToDto)
-                .collect(Collectors.toList());
+        return reflexSessionDataRepository.findAll().stream().map(mapper::reflexSessionDataToDto).toList();
     }
 
     public ReflexSessionDataDTO getReflexSessionDataById(int id) {
@@ -47,8 +44,19 @@ public class ReflexSessionDataService {
 
     public List<ReflexSessionDataDTO> getReflexSessionsByUserId(int userId) {
         List<ReflexSessionData> reflexSessions = reflexSessionDataRepository.findReflexSessionsByUserId(userId);
-        return reflexSessions.stream().map(mapper::reflexSessionDataToDto).collect(Collectors.toList());
+        return reflexSessions.stream().map(mapper::reflexSessionDataToDto).toList();
     }
 
+    public Integer countReflexSessionsByUserId(int userId) {
+            return reflexSessionDataRepository.countByUserId(userId);
+    }
+
+    public Integer getBestScore() {
+        return reflexSessionDataRepository.findBestScore();
+    }
+
+    public Integer getBestScoreByUserId(int userId) {
+        return reflexSessionDataRepository.findBestScoreByUserId(userId);
+    }
 
 }

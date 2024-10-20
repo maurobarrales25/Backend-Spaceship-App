@@ -29,4 +29,6 @@ public interface GameSessionRepository extends JpaRepository<GameSession, Intege
     @Query("SELECT gs FROM GameSession gs WHERE gs.user.id = ?1 AND gs.learningSessionData IS NOT NULL")
     List<GameSession> findLearningSessionsByUserId(int userId);
 
+    @Query("SELECT gs FROM GameSession gs WHERE gs.user.id = ?1 AND gs.musicalSessionData IS NOT NULL")
+    List<GameSession> findMusicalSessionByUserId(int userId);
 }

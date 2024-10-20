@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 
 @MappedSuperclass
-public class SessionData {
+public abstract class SessionData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

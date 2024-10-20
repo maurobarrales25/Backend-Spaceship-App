@@ -76,9 +76,27 @@ public  class GameSessionController {
         return ResponseEntity.ok(sessions);
     }
 
+    @GetMapping("getMusicalSessionsByUserId/{userId}")
+    public ResponseEntity<List<GameSessionDTO>> getMusicalSessionsByUserId(@PathVariable("userId") int userId) {
+        List<GameSessionDTO> sessions = gameSessionService.getMusicalSessionsByUserId(userId);
+        return ResponseEntity.ok(sessions);
+    }
+
     @GetMapping("/getReflexSessionsByUserId/{userId}")
     public ResponseEntity<List<GameSessionDTO>> getReflexSessionsByUserId(@PathVariable("userId") int userId) {
         List<GameSessionDTO> sessions = gameSessionService.getReflexSessionsByUserId(userId);
         return ResponseEntity.ok(sessions);
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<GameSessionDTO>> getSessionsByTypeAndUserId(
+            @PathVariable int userId,
+            @RequestParam("type") String type) {
+        try {
+            List<GameSessionDTO> sessions = gameSessionService.getSessionsByTypeAndUserId(type, userId);
+            return ResponseEntity.ok(sessions);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 }

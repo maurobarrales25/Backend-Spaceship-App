@@ -28,7 +28,7 @@ public class ReflexSessionDataController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdSession);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getById/{id}")
     public ResponseEntity<ReflexSessionDataDTO> getReflexSessionDataById(@PathVariable int id) {
         ReflexSessionDataDTO sessionData = reflexSessionDataService.getReflexSessionDataById(id);
         return ResponseEntity.ok(sessionData);
@@ -41,9 +41,31 @@ public class ReflexSessionDataController {
     }
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteById/{id}")
     public ResponseEntity<Void> deleteReflexSessionData(@PathVariable int id) {
         reflexSessionDataService.deleteReflexSessionData(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/countByUserId/{userId}")
+    public ResponseEntity<Long> countReflexSessionsByUserId(@PathVariable int userId) {
+        long count = reflexSessionDataService.countReflexSessionsByUserId(userId);
+        return ResponseEntity.ok(count);
+    }
+
+    @GetMapping("/bestScore")
+    public ResponseEntity<Integer> getBestGlobalScore() {
+        Integer bestScore = reflexSessionDataService.getBestScore();
+        return ResponseEntity.ok(bestScore);
+    }
+
+    @GetMapping("/bestScoreByUserId/{userId}")
+    public ResponseEntity<Integer> getBestScoreByUserId(@PathVariable int userId) {
+        Integer bestScore = reflexSessionDataService.getBestScoreByUserId(userId);
+        return ResponseEntity.ok(bestScore);
+    }
+
+
+
+
 }
